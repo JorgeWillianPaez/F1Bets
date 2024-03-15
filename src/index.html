@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F1 apostas</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body onload="init()">
+    <div class="background"></div>
+    <div class="black">t</div>
+    <main>
+      <span id="balance"></span>
+      <button id="bet">Apostar</button>
+      <div>
+        <select id="driver">
+          <option value="" disabled selected>Selecione um piloto</option>
+          <option value="Charles LeClerc">LeClerc</option>
+          <option value="Max Verstappen">Max Verstappen</option>
+          <option value="Lando Norris">Lando Norris</option>
+          <option value="Fernando Alonso">Fernando Alonso</option>
+          <option value="Lewis Hamilton">Lewis Hamilton</option>
+        </select>
+        <img id="car" />
+      </div>
+      <div class="speedwayContainer">
+        <img class="driver" id="driver1" src="../assets/ferrari.png" />
+        <img class="driver" id="driver2" src="../assets/redbull.png" />
+        <img class="driver" id="driver3" src="../assets/mclaren.png" />
+        <img class="driver" id="driver4" src="../assets/aston-martin.png" />
+        <img class="driver" id="driver5" src="../assets/merdedes.png" />
+      </div>
+      <div class="winner">
+        <h3 id="winnerName"></h3>
+        <p id="choseDriver"></p>
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
