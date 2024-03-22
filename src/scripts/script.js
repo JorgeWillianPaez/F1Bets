@@ -130,7 +130,7 @@ function bet() {
                         changeComponent(true);
                     });
 
-                    document.getElementById("value") = null;
+                    document.getElementById("value").value = null;
 
                     break;
                 }
@@ -150,7 +150,6 @@ function bet() {
             currentDriver.margin += randomNumber();
             currentDriver.element.style.left = `${currentDriver.margin}px`;
         }
-        chosenDriver = {};
     }
 
     function clearPositions() {
@@ -160,6 +159,12 @@ function bet() {
             currentDriver.element.style.left = currentDriver.margin;
         }
         chosenDriver = {};
+        const driver = document.getElementById("driver");
+        const driverPhoto = document.getElementById("chosenDriverPhoto");
+        const driverCarPhoto = document.getElementById("chosenDriverCarPhoto");
+        driver.options.selectedIndex = 0;
+        driverPhoto.src = "../../assets/user.png";
+        driverCarPhoto.src = "../../assets/car.png";
     }
 }
 
