@@ -13,11 +13,6 @@
       <div class="options">
         <span id="balance"></span>
         <span id="error"></span>
-        <input
-          placeholder="Insira o valor para apostar..."
-          id="value"
-          type="number"
-        />
         <div>
           <select id="driver">
             <option value="" disabled selected>Selecione um piloto</option>
@@ -42,14 +37,21 @@
             width="180px"
           />
         </div>
+        <input
+          placeholder="Insira o valor para apostar..."
+          id="value"
+          type="number"
+        />
         <button id="bet" onclick="bet()">Apostar</button>
       </div>
     </div>
     <main id="mainContent" class="mainHide">
       <div id="winnerContainer" class="winner modal">
         <button id="closeModal">X</button>
+        <h3 id="winnerName"></h3>
         <img id="winnerPhoto" width="150px" />
         <img src="../../assets/trophy.png" width="70px" />
+        <p id="finishMessage"></p>
       </div>
 
       <div class="speedwayContainer">

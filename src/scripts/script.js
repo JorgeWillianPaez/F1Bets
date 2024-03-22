@@ -1,5 +1,5 @@
 let balance;
-let chosenDriver;
+let chosenDriver = {};
 
 const drivers = [
     {
@@ -8,7 +8,8 @@ const drivers = [
         margin: 0,
         element: document.getElementById("driver1"),
         photo: "../../assets/Drivers/leclerc.png",
-        car: "../../assets/Cars/ferrari.png"
+        car: "../../assets/Cars/ferrari.png",
+        background: "#f34238"
     },
     {
         name: "Max Verstappen",
@@ -16,7 +17,8 @@ const drivers = [
         margin: 0,
         element: document.getElementById("driver2"),
         photo: "../../assets/Drivers/max.png",
-        car: "../../assets/Cars/redbull.png"
+        car: "../../assets/Cars/redbull.png",
+        background: "#2b2e41"
     },
     {
         name: "Lando Norris",
@@ -24,7 +26,8 @@ const drivers = [
         margin: 0,
         element: document.getElementById("driver3"),
         photo: "../../assets/Drivers/norris.png",
-        car: "../../assets/Cars/mclaren.png"
+        car: "../../assets/Cars/mclaren.png",
+        background: "#faa82c"
     },
     {
         name: "Fernando Alonso",
@@ -32,7 +35,8 @@ const drivers = [
         margin: 0,
         element: document.getElementById("driver4"),
         photo: "../../assets/Drivers/alonso.png",
-        car: "../../assets/Cars/aston-martin.png"
+        car: "../../assets/Cars/aston-martin.png",
+        background: "#067e7b"
     },
     {
         name: "Lewis Hamilton",
@@ -40,9 +44,12 @@ const drivers = [
         margin: 0,
         element: document.getElementById("driver5"),
         photo: "../../assets/Drivers/hamilton.png",
-        car: "../../assets/Cars/mercedes.png"
+        car: "../../assets/Cars/mercedes.png",
+        background: "#424954"
     }
 ]
+
+const randomGeneratedNumbers = [];
 
 function init() {
     balance = 100;
@@ -71,7 +78,7 @@ function bet() {
     const errorSpan = document.getElementById("error");
     const valueInput = parseInt(document.getElementById("value").value);
 
-    if (valueInput <= balance && chosenDriver) {
+    if (valueInput <= balance && valueInput > 0 && Object.keys(chosenDriver).length > 0) {
         errorSpan.innerText = "";
 
         changeComponent(false);
@@ -96,59 +103,69 @@ function bet() {
                 if (currentDriver.margin >= 1130) {
                     clearInterval(start);
 
-                    let winner = {};
+                    setTimeout(() => {
+                        let winner = currentDriver;
 
-                    const winnerContainer = document.getElementById("winnerContainer");
-                    winnerContainer.classList.remove("modal-show");
-                    winnerContainer.classList.add("modal");
-
-                    winner = currentDriver;
-
-                    winnerContainer.classList.remove("modal");
-                    winnerContainer.classList.add("modal-show");
-
-                    const winnerPhoto = document.getElementById("winnerPhoto");
-                    winnerPhoto.src = winner.photo;
-
-                    if (chosenDriver.name == winner.name) {
-                        balance += (valueInput * 2)
-                    } else {
-                        balance -= valueInput
-                    }
-
-                    spanBalance.innerText = `SALDO: R$ ${balance}`;
-
-                    clearPositions();
-
-                    const closeModalButton = document.getElementById("closeModal");
-
-                    closeModalButton.addEventListener("click", function () {
                         const winnerContainer = document.getElementById("winnerContainer");
                         winnerContainer.classList.remove("modal-show");
                         winnerContainer.classList.add("modal");
 
-                        changeComponent(true);
-                    });
+                        winnerContainer.style.backgroundColor = winner.background;
 
-                    document.getElementById("value").value = null;
+                        winnerContainer.classList.remove("modal");
+                        winnerContainer.classList.add("modal-show");
 
+                        const winnerPhoto = document.getElementById("winnerPhoto");
+                        winnerPhoto.src = winner.photo;
+
+                        const winnerName = document.getElementById("winnerName");
+                        winnerName.innerText = `Vencedor: ${winner.name}`;
+
+                        const finishMessage = document.getElementById("finishMessage");
+
+                        if (chosenDriver.name == winner.name) {
+                            balance += (valueInput * 2);
+                            finishMessage.innerText = `Parabéns! Você ganhou R$ ${valueInput * 2} :)`;
+                        } else {
+                            balance -= valueInput;
+                            finishMessage.innerText = `Você apostou em "${chosenDriver.name}" e perdeu R$ ${valueInput} :(`;
+                        }
+
+                        spanBalance.innerText = `SALDO: R$ ${balance}`;
+
+                        const closeModalButton = document.getElementById("closeModal");
+
+                        closeModalButton.addEventListener("click", function () {
+                            const winnerContainer = document.getElementById("winnerContainer");
+                            winnerContainer.classList.remove("modal-show");
+                            winnerContainer.classList.add("modal");
+
+                            changeComponent(true);
+
+                            clearPositions();
+                        });
+
+                        document.getElementById("value").value = null;
+                    }, 600);
                     break;
                 }
             }
         }
     } else {
-        if (!chosenDriver) {
+        if (Object.keys(chosenDriver).length == 0) {
             errorSpan.innerText = "Escolha um piloto!";
         } else {
-            errorSpan.innerText = "Você não possui saldo suficiente!";
+            errorSpan.innerText = "Saldo inválido ou insuficiente!";
         }
     }
 
     function updatePositions() {
         for (let i = 0; i < drivers.length; i++) {
             const currentDriver = drivers[i];
-            currentDriver.margin += randomNumber();
+            const number = randomNumber();
+            currentDriver.margin += number;
             currentDriver.element.style.left = `${currentDriver.margin}px`;
+            randomGeneratedNumbers[i] = number;
         }
     }
 
@@ -158,18 +175,11 @@ function bet() {
             currentDriver.margin = 0;
             currentDriver.element.style.left = currentDriver.margin;
         }
-        chosenDriver = {};
-        const driver = document.getElementById("driver");
-        const driverPhoto = document.getElementById("chosenDriverPhoto");
-        const driverCarPhoto = document.getElementById("chosenDriverCarPhoto");
-        driver.options.selectedIndex = 0;
-        driverPhoto.src = "../../assets/user.png";
-        driverCarPhoto.src = "../../assets/car.png";
     }
 }
 
 function randomNumber() {
-    return Math.random() * (20 - 10) + 10;
+    return Math.random() * (25 - 5) + 5;
 }
 
 function changeComponent(option) {
@@ -186,5 +196,13 @@ function changeComponent(option) {
         mainContent.classList.remove("mainShow");
 
         optionsContainer.classList.remove("optionsContainerHide");
+
+        chosenDriver = {};
+        const driver = document.getElementById("driver");
+        const driverPhoto = document.getElementById("chosenDriverPhoto");
+        const driverCarPhoto = document.getElementById("chosenDriverCarPhoto");
+        driver.options.selectedIndex = 0;
+        driverPhoto.src = "../../assets/user.png";
+        driverCarPhoto.src = "../../assets/car.png";
     }
 }
