@@ -100,7 +100,7 @@ function bet() {
             } while (chosenDriver.name == drivers[number].name);
 
             opponentBonus2 = drivers[number];
-            document.getElementById("bonus2Opponent").innerText = `${opponentBonus2.name} está com velocidade reduzida!`;
+            document.getElementById("bonus2Opponent").innerText = `${opponentBonus2.name} está com a velocidade reduzida!`;
         }
 
         const start = setInterval(() => {
@@ -113,7 +113,7 @@ function bet() {
             spanBalance.innerText = `SALDO: R$ ${balance}`;
             for (let i = 0; i < drivers.length; i++) {
                 const currentDriver = drivers[i];
-                if (currentDriver.position >= 1130) {
+                if (currentDriver.position >= 1130) { // 1130 is the end of the track
                     clearInterval(start);
 
                     setTimeout(() => {
@@ -185,9 +185,10 @@ function bet() {
                 number -= 1;
             }
 
-            // if (bonus3 == true && currentDriver.name == opponentBonus3.name && ) {
-            //     number -= 1;
-            // }
+            if (bonus3 == true && currentDriver.name == opponentBonus3.name) {
+                number -= 1;
+                document.getElementById("bonus3Opponent").innerText = `${opponentBonus3.name} está com a velocidade reduzida!`;
+            }
 
             currentDriver.position += number;
             currentDriver.element.style.left = `${currentDriver.position}px`;
@@ -202,6 +203,14 @@ function bet() {
         newPositions.sort((a, b) => b.position - a.position);
 
         positions = newPositions;
+
+        if (bonus3 == true && Object.keys(opponentBonus3).length == 0) {
+            drivers.forEach(driver => {
+                if (driver.name != chosenDriver.name && driver.position >= 565) { // 565 is half of the track
+                    opponentBonus3 = driver;
+                }
+            })
+        }
 
         const ranking = document.getElementById("ranking");
         ranking.innerHTML = "";
