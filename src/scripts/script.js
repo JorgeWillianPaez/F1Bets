@@ -5,7 +5,6 @@ const drivers = [
     {
         name: "LeClerc",
         position: 0,
-        margin: 0,
         element: document.getElementById("driver1"),
         photo: "../../assets/Drivers/leclerc.png",
         car: "../../assets/Cars/ferrari.png",
@@ -14,7 +13,6 @@ const drivers = [
     {
         name: "Max Verstappen",
         position: 0,
-        margin: 0,
         element: document.getElementById("driver2"),
         photo: "../../assets/Drivers/max.png",
         car: "../../assets/Cars/redbull.png",
@@ -23,7 +21,6 @@ const drivers = [
     {
         name: "Lando Norris",
         position: 0,
-        margin: 0,
         element: document.getElementById("driver3"),
         photo: "../../assets/Drivers/norris.png",
         car: "../../assets/Cars/mclaren.png",
@@ -32,7 +29,6 @@ const drivers = [
     {
         name: "Fernando Alonso",
         position: 0,
-        margin: 0,
         element: document.getElementById("driver4"),
         photo: "../../assets/Drivers/alonso.png",
         car: "../../assets/Cars/aston-martin.png",
@@ -41,13 +37,14 @@ const drivers = [
     {
         name: "Lewis Hamilton",
         position: 0,
-        margin: 0,
         element: document.getElementById("driver5"),
         photo: "../../assets/Drivers/hamilton.png",
         car: "../../assets/Cars/mercedes.png",
         background: "#424954"
     }
 ]
+
+let positions = [];
 
 const randomGeneratedNumbers = [];
 
@@ -100,7 +97,7 @@ function bet() {
             spanBalance.innerText = `SALDO: R$ ${balance}`;
             for (let i = 0; i < drivers.length; i++) {
                 const currentDriver = drivers[i];
-                if (currentDriver.margin >= 1130) {
+                if (currentDriver.position >= 1130) {
                     clearInterval(start);
 
                     setTimeout(() => {
@@ -160,26 +157,54 @@ function bet() {
     }
 
     function updatePositions() {
+        let newPositions = [];
         for (let i = 0; i < drivers.length; i++) {
             const currentDriver = drivers[i];
             const number = randomNumber();
-            currentDriver.margin += number;
-            currentDriver.element.style.left = `${currentDriver.margin}px`;
+            currentDriver.position += number;
+            currentDriver.element.style.left = `${currentDriver.position}px`;
             randomGeneratedNumbers[i] = number;
+            const driverPosition = {
+                driver: currentDriver.name,
+                position: currentDriver.position
+            }
+            newPositions.push(driverPosition);
+        }
+        newPositions.sort((a, b) => a.position - b.position);
+
+        positions = newPositions;
+
+        const ranking = document.getElementById("ranking");
+
+        for (let i = 1; i <= positions.length; i++) {
+            const currentPosition = positions[i];
+
+            const tr = document.createElement("tr");
+
+            const th = document.createElement("th");
+            th.innerHTML = `<th scope="row">${i}</th>`;
+
+            const td = document.createElement("td");
+            td.innerHTML = `<td>${currentPosition.driver}</td>`;
+
+            tr.appendChild(th);
+            tr.appendChild(td);
+
+            ranking.appendChild(tr);
         }
     }
 
     function clearPositions() {
         for (let i = 0; i < drivers.length; i++) {
             const currentDriver = drivers[i];
-            currentDriver.margin = 0;
-            currentDriver.element.style.left = currentDriver.margin;
+            currentDriver.position = 0;
+            currentDriver.element.style.left = currentDriver.position;
         }
     }
 }
 
 function randomNumber() {
-    return Math.random() * (25 - 5) + 5;
+    return Math.random() * (17 - 15) + 15;
 }
 
 function changeComponent(option) {
