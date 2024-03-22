@@ -61,6 +61,7 @@ function init() {
 
     const driver = document.getElementById("driver");
     driver.addEventListener("change", function (e) {
+        document.getElementById("error").innerText = "";
         const driverPhoto = document.getElementById("chosenDriverPhoto");
         const driverCarPhoto = document.getElementById("chosenDriverCarPhoto");
 
