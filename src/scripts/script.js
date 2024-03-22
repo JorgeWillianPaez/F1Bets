@@ -1,5 +1,6 @@
 let balance;
 let chosenDriver = {};
+let speedBonus = false;
 
 const drivers = [
     {
@@ -170,19 +171,21 @@ function bet() {
             }
             newPositions.push(driverPosition);
         }
-        newPositions.sort((a, b) => a.position - b.position);
+
+        newPositions.sort((a, b) => b.position - a.position);
 
         positions = newPositions;
 
         const ranking = document.getElementById("ranking");
+        ranking.innerHTML = "";
 
-        for (let i = 1; i <= positions.length; i++) {
+        for (let i = 0; i < positions.length; i++) {
             const currentPosition = positions[i];
 
             const tr = document.createElement("tr");
 
             const th = document.createElement("th");
-            th.innerHTML = `<th scope="row">${i}</th>`;
+            th.innerHTML = `<th scope="row">${i + 1}</th>`;
 
             const td = document.createElement("td");
             td.innerHTML = `<td>${currentPosition.driver}</td>`;
@@ -204,7 +207,7 @@ function bet() {
 }
 
 function randomNumber() {
-    return Math.random() * (17 - 15) + 15;
+    return Math.random() * (30 - 5) + 5;
 }
 
 function changeComponent(option) {
@@ -229,5 +232,53 @@ function changeComponent(option) {
         driver.options.selectedIndex = 0;
         driverPhoto.src = "../../assets/user.png";
         driverCarPhoto.src = "../../assets/car.png";
+    }
+}
+
+function ativarBonus1() {
+    const spanBalance = document.getElementById("balance");
+    const botao = document.getElementById("bonus1");
+    const errorSpan = document.getElementById("error");
+    const successSpan = document.getElementById("success");
+
+    if (balance >= 7) {
+        balance -= 7;
+        spanBalance.innerText = `SALDO: R$ ${balance}`;
+        botao.disabled = true;
+        successSpan.innerText = "Bônus 1 comprado!";
+    } else {
+        errorSpan.innerText = "Você não tem saldo suficiente!";
+    }
+}
+
+function ativarBonus2() {
+    const spanBalance = document.getElementById("balance");
+    const botao = document.getElementById("bonus2");
+    const errorSpan = document.getElementById("error");
+    const successSpan = document.getElementById("success");
+
+    if (balance >= 5) {
+        balance -= 5;
+        spanBalance.innerText = `SALDO: R$ ${balance}`;
+        botao.disabled = true;
+        successSpan.innerText = "Bônus 2 comprado!";
+    } else {
+        errorSpan.innerText = "Você não tem saldo suficiente!";
+    }
+}
+
+function ativarBonus3() {
+    const spanBalance = document.getElementById("balance");
+    const botao = document.getElementById("bonus3");
+    const errorSpan = document.getElementById("error");
+    const successSpan = document.getElementById("success");
+
+    if (balance >= 10) {
+        balance -= 10;
+        spanBalance.innerText = `SALDO: R$ ${balance}`;
+        botao.disabled = true;
+        successSpan.innerText = "Bônus 3 comprado!";
+    } else {
+        errorSpan.innerText = "Você não tem saldo suficiente!";
     }
 }

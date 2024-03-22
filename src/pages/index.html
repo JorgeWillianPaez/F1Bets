@@ -13,6 +13,7 @@
       <div class="options">
         <span id="balance"></span>
         <span id="error"></span>
+        <span id="success"></span>
         <div>
           <select id="driver">
             <option value="" disabled selected>Selecione um piloto</option>
@@ -42,6 +43,15 @@
           id="value"
           type="number"
         />
+        <button id="bonus1" onclick="ativarBonus1()">
+          R$ 7,00 Bônus de velocidade
+        </button>
+        <button id="bonus2" onclick="ativarBonus2()">
+          R$ 5,00 Reduzir sutilmente a velocidade de um oponente aleatório
+        </button>
+        <button id="bonus3" onclick="ativarBonus3()">
+          R$ 10,00 Reduzir sutilmente a velocidade do oponente mais a frente
+        </button>
         <button id="bet" onclick="bet()">Apostar</button>
       </div>
     </div>
@@ -55,7 +65,7 @@
       </div>
 
       <div>
-        <table>
+        <table class="rankingTable">
           <thead>
             <tr>
               <th scope="col">Posição</th>

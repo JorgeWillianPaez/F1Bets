@@ -266,10 +266,15 @@ button {
   height: 45%;
   width: 35%;
   z-index: 2;
+  top: 40%;
 }
 
 #error {
   color: red;
+  text-align: center;
+}
+#success {
+  color: green;
   text-align: center;
 }
 
@@ -295,4 +300,25 @@ button {
   flex-direction: column;
   height: 100vh;
   position: relative;
+}
+
+.rankingTable {
+  width: 400px;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.rankingTable thead,
+tbody {
+  border: 2px solid #ffffff;
+}
+
+.rankingTable tr {
+  border: 1px solid #ffffff;
+  transition: 0.2s linear;
+}
+
+.rankingTable td {
+  border: 1px solid #ffffff;
+  padding: 4px;
 }
