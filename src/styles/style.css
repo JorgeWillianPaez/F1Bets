@@ -279,6 +279,7 @@ button {
 }
 
 #closeModal {
+  position: absolute;
   background-color: gray;
   border: none;
   border-radius: 4px;
@@ -287,6 +288,7 @@ button {
   color: white;
   width: 30px;
   height: 30px;
+  top: 16px;
 }
 
 .mainHide {
@@ -321,4 +323,9 @@ tbody {
 .rankingTable td {
   border: 1px solid #ffffff;
   padding: 4px;
+}
+
+.bonusOpponent {
+  color: #ffffff;
+  margin-top: 4px;
 }

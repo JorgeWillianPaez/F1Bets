@@ -1,6 +1,10 @@
 let balance;
 let chosenDriver = {};
-let speedBonus = false;
+let bonus1 = false;
+let bonus2 = false;
+let bonus3 = false;
+let opponentBonus2 = {};
+let opponentBonus3 = {};
 
 const drivers = [
     {
@@ -74,6 +78,7 @@ function init() {
 
 function bet() {
     const errorSpan = document.getElementById("error");
+    document.getElementById("success").innerText = "";
     const valueInput = parseInt(document.getElementById("value").value);
 
     if (valueInput <= balance && valueInput > 0 && Object.keys(chosenDriver).length > 0) {
@@ -87,6 +92,16 @@ function bet() {
 
         const optionsContainer = document.getElementById("optionsContainer");
         optionsContainer.classList.add("optionsContainerHide");
+
+        if (bonus2 == true) {
+            let number;
+            do {
+                number = parseInt(Math.random() * (5 - 0) + 0);
+            } while (chosenDriver.name == drivers[number].name);
+
+            opponentBonus2 = drivers[number];
+            document.getElementById("bonus2Opponent").innerText = `${opponentBonus2.name} está com velocidade reduzida!`;
+        }
 
         const start = setInterval(() => {
             updatePositions();
@@ -161,7 +176,19 @@ function bet() {
         let newPositions = [];
         for (let i = 0; i < drivers.length; i++) {
             const currentDriver = drivers[i];
-            const number = randomNumber();
+            let number = randomNumber();
+            if (bonus1 == true && currentDriver.name == chosenDriver.name) {
+                number += 1;
+            }
+
+            if (bonus2 == true && currentDriver.name == opponentBonus2.name) {
+                number -= 1;
+            }
+
+            // if (bonus3 == true && currentDriver.name == opponentBonus3.name && ) {
+            //     number -= 1;
+            // }
+
             currentDriver.position += number;
             currentDriver.element.style.left = `${currentDriver.position}px`;
             randomGeneratedNumbers[i] = number;
@@ -232,6 +259,17 @@ function changeComponent(option) {
         driver.options.selectedIndex = 0;
         driverPhoto.src = "../../assets/user.png";
         driverCarPhoto.src = "../../assets/car.png";
+
+        bonus1 = false;
+        bonus2 = false;
+        bonus3 = false;
+        opponentBonus2 = {};
+        opponentBonus3 = {};
+        document.getElementById("bonus1").disabled = false;
+        document.getElementById("bonus2").disabled = false;
+        document.getElementById("bonus3").disabled = false;
+        document.getElementById("bonus2Opponent").innerText = "";
+        document.getElementById("bonus3Opponent").innerText = "";
     }
 }
 
@@ -242,6 +280,7 @@ function ativarBonus1() {
     const successSpan = document.getElementById("success");
 
     if (balance >= 7) {
+        bonus1 = true;
         balance -= 7;
         spanBalance.innerText = `SALDO: R$ ${balance}`;
         botao.disabled = true;
@@ -258,6 +297,7 @@ function ativarBonus2() {
     const successSpan = document.getElementById("success");
 
     if (balance >= 5) {
+        bonus2 = true;
         balance -= 5;
         spanBalance.innerText = `SALDO: R$ ${balance}`;
         botao.disabled = true;
@@ -274,6 +314,7 @@ function ativarBonus3() {
     const successSpan = document.getElementById("success");
 
     if (balance >= 10) {
+        bonus3 = true;
         balance -= 10;
         spanBalance.innerText = `SALDO: R$ ${balance}`;
         botao.disabled = true;
