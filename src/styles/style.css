@@ -132,6 +132,13 @@ button {
   cursor: pointer;
 }
 
+.logo {
+  position: absolute;
+  width: 80px;
+  border-radius: 6px;
+  top: 5px;
+}
+
 .background {
   position: absolute;
   background-image: url("../../assets/background.jpg");
@@ -349,4 +356,9 @@ tbody {
 
 .btnBonus:hover {
   background-color: rgb(158, 13, 13);
+}
+
+.btnBonus:disabled {
+  background-color: gray;
+  opacity: 0.5;
 }
